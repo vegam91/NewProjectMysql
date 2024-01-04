@@ -1,10 +1,9 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
-require('dotenv').config();
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-  host: "localhost",
-  dialect: "mysql",
-  port: 3306,
-});
+const {  Model, DataTypes } = require("sequelize");
+const sequelize = require("../db/sequelize")
+
+
+
+
 
 class Movie extends Model {}
 
@@ -26,5 +25,9 @@ Movie.init(
     modelName: "Movie",
   }
 );
-
+sequelize.sync().then(()=>{
+    console.log("Movie creada");
+}).catch((error)=>{
+    console.error("LA tabla no se ha creado:", error)
+})
 module.exports = Movie;
